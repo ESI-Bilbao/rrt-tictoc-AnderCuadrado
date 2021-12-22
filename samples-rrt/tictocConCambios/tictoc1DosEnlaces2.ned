@@ -60,7 +60,9 @@ network tictoc1DosEnlaces2
     connections:
         node1.outPort[0] --> Channel --> node2.inPort[0];
         node1.inPort[0] <-- Channel <-- node2.outPort[0];
-
+		
+        
+        
         source1.outPort --> node1.inPort[1];
 
 }
