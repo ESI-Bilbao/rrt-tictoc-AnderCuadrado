@@ -22,8 +22,8 @@ using namespace omnetpp;
 class txc1PaqetsRed : public cSimpleModule
 {
   private:
-           //cChannel *channel[2]; // one channel for each output
-           cChannel *channel[1];//SOLO HAY UNO PORQUE NO HAY MAS ENLACE. EN CASO DE MAS, PONER 2
+           cChannel *channel[2]; // one channel for each output
+           //cChannel *channel[1];//SOLO HAY UNO PORQUE NO HAY MAS ENLACE. EN CASO DE MAS, PONER 2
            cQueue *queue[2];  // one queue for each channel
            double probability;  // from 0 to 1
   protected:
@@ -40,11 +40,11 @@ Define_Module(txc1PaqetsRed);
 void txc1PaqetsRed::initialize()
 {
         channel[0] = gate("outPort", 0) -> getTransmissionChannel();
-        //channel[1] = gate("outPort", 1) -> getTransmissionChannel();
+        channel[1] = gate("outPort", 1) -> getTransmissionChannel();
 
         // Create one queue for each channel
         queue[0] = new cQueue("queueZero");
-        //queue[1] = new cQueue("queueOne");NO SE PONE POR SOLO HABER UN ENLACE. EN CASO DE MAS, DESCOMENTARLA
+        queue[1] = new cQueue("queueOne");//NO SE PONE POR SOLO HABER UN ENLACE. EN CASO DE MAS, DESCOMENTARLA
 
         // Initialize random number generator
         srand(time(NULL));
