@@ -1,0 +1,174 @@
+version 2
+run TicToc18-17-20220103-18:40:47-1088
+attr configname TicToc18
+attr datetime 20220103-18:40:47
+attr experiment TicToc18
+attr inifile omnetpp.ini
+attr iterationvars $N=10
+attr iterationvarsf N=10-
+attr measurement $N=10
+attr network TicToc18
+attr processid 1088
+attr repetition 1
+attr replication #1
+attr resultdir results
+attr runnumber 17
+attr seedset 17
+itervar N 10
+param *.numCentralNodes 10
+
+statistic TicToc18.tic[0] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[1] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[2] hopCount:stats
+field count 1
+field mean 1
+field stddev -nan
+field min 1
+field max 1
+field sum 1
+field sqrsum 1
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[3] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[4] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[5] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[6] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[7] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[8] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[9] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[10] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[11] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[12] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+statistic TicToc18.tic[13] hopCount:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr source arrival
+attr title "hop count, stats"
+

@@ -40,6 +40,7 @@ Define_Module(txc1PaqetsFuente);
 
 void txc1PaqetsFuente::initialize()
 {
+
     meanPacketLength = (double) par("meanPacketLength");
        // Get departure times, generate packets and schedule them
        std::vector<double> departures = getDepartures(lambda, samples);
@@ -100,5 +101,6 @@ void txc1PaqetsFuente::handleMessage(cMessage *msg) {
     // Send scheduled packet
     CustomPacket *pkt = check_and_cast<CustomPacket *> (msg);
     send(pkt, "outPort");
+
 }
 

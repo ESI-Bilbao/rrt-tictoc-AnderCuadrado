@@ -26,12 +26,19 @@ class txc1PaqetsRed : public cSimpleModule
            //cChannel *channel[1];//SOLO HAY UNO PORQUE NO HAY MAS ENLACE. EN CASO DE MAS, PONER 2
            cQueue *queue[2];  // one queue for each channel
            double probability;  // from 0 to 1
+
+           /*long numSent;
+               long numReceived;
+               cLongHistogram hopCountStats;
+               cOutVector hopCountVector;*/
   protected:
            virtual void initialize() override;
            virtual void handleMessage(cMessage *msg) override;
            virtual void sendNew(CustomPacket *pkt);
            virtual void sendNext(int gateIndex);
            virtual void sendPacket(CustomPacket *pkt, int gateIndex);
+           // The finish() function is called by OMNeT++ at the end of the simulation:
+          // virtual void finish() override;
 };
 
 // The module class needs to be registered with OMNeT++
@@ -39,6 +46,17 @@ Define_Module(txc1PaqetsRed);
 
 void txc1PaqetsRed::initialize()
 {
+        /*
+        numSent = 0;
+        numReceived = 0;
+        WATCH(numSent);
+        WATCH(numReceived);
+
+        hopCountStats.setName("hopCountStats");
+        hopCountStats.setRangeAutoUpper(0, 10, 1.5);
+        hopCountVector.setName("HopCount");
+        //Hasta aqui lo de los vectores*/
+
         channel[0] = gate("outPort", 0) -> getTransmissionChannel();
         channel[1] = gate("outPort", 1) -> getTransmissionChannel();
 
@@ -60,6 +78,7 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
        EV << "Packet arrived from gate " + std::to_string(arrivalGateIndex) + "\n";
 
        if (pkt -> getDesdeDest()) {
+
            // Packet from source
            EV << "Forward packet from source\n";
            pkt -> setDesdeDest(false);
@@ -74,11 +93,22 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
                send(nak, "outPort", arrivalGateIndex);
            }
            else {
+
+              /*
+               // Message arrived
+               int hopcount = pkt->getHopCount();
+               // update statistics.
+                numReceived++;
+                hopCountVector.record(hopcount);
+                hopCountStats.collect(hopcount);
+                */
+
                EV << "Packet arrived without error, send ACK\n";
                CustomPacket *ack = new CustomPacket("ACK");
                ack -> setKind(2);
                send(ack, "outPort", arrivalGateIndex);
                sendNew(pkt);
+               //numSent++;
            }
        }
        else if (pkt -> getKind() == 2) { // 2: ACK
@@ -135,4 +165,19 @@ void txc1PaqetsRed::sendPacket(CustomPacket *pkt, int gateIndex) {
         send(newPkt, "outPort", gateIndex);
     }
 }
+/*
+void txc1PaqetsRed::finish()
+{
+    // This function is called by OMNeT++ at the end of the simulation.
+    EV << "Sent:     " << numSent << endl;
+    EV << "Received: " << numReceived << endl;
+    EV << "Hop count, min:    " << hopCountStats.getMin() << endl;
+    EV << "Hop count, max:    " << hopCountStats.getMax() << endl;
+    EV << "Hop count, mean:   " << hopCountStats.getMean() << endl;
+    EV << "Hop count, stddev: " << hopCountStats.getStddev() << endl;
 
+    recordScalar("#sent", numSent);
+    recordScalar("#received", numReceived);
+
+    hopCountStats.recordAs("hop count");
+}*/

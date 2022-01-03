@@ -2,6 +2,7 @@ simple txc1PaqetsRedFinal
 {
     parameters:
         @display("i=block/departure");
+        @statistic[hopCount](title="hop count"; source="arrival"; record=vector,stats; interpolationmode=none);
         double probability;
     gates:
         input inPort[];
@@ -28,8 +29,10 @@ simple txc1PaqetsFuenteFinal
 
 network tictocFinal
 {
-    @display("bgb=500.00,300.00");
+    @display("bgb=558,343");
     //@display("bgb=285.6,182.28");
+    //@figure[description](type=text; pos=5,20; font=,,bold; text="Random routing example - displaying last hop count");
+    //@figure[lasthopcount](type=text; pos=5,35; text="last hopCount: N/A");
     types:
         channel Channel extends ned.DatarateChannel
         {
@@ -40,15 +43,15 @@ network tictocFinal
     submodules:
 
         source1: txc1PaqetsFuente {
-            @display("p=28.829998,139.5");
+            @display("p=48,139");
             meanPacketLength = 1000/3;
         }
         source2: txc1PaqetsFuente {
-            @display("p=28.829998,237.15");
+            @display("p=54,237");
             meanPacketLength = 1000/3;
         }
         source3: txc1PaqetsFuente {
-            @display("p=28.829998,33.48");
+            @display("p=54,33");
             meanPacketLength = 1000/3;
         }
         node1: txc1PaqetsRed {

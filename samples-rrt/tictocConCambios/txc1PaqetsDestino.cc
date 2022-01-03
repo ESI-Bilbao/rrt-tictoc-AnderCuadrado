@@ -25,6 +25,7 @@ class txc1PaqetsDestino : public cSimpleModule
 {
 protected:
         virtual void handleMessage(cMessage *msg) override;
+
 };
 
 // The module class needs to be registered with OMNeT++
@@ -52,3 +53,6 @@ void txc1PaqetsDestino::handleMessage(cMessage *msg)
         }
     }
 }
+
+
+
