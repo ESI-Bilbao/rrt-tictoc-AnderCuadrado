@@ -26,6 +26,8 @@ class txc1PaqetsFuente : public cSimpleModule
             double meanPacketLength;
             int samples = 100;
             int sequenceNumber = 0;
+            long numSent;
+            long numReceived;
 
   protected:
             virtual void initialize() override;
@@ -33,6 +35,7 @@ class txc1PaqetsFuente : public cSimpleModule
             virtual std::vector<double> getLengths(double mu, int samples);
             virtual CustomPacket* getPacket();
             virtual void handleMessage(cMessage *msg) override;
+            virtual void refreshDisplay() const override;
 };
 
 // The module class needs to be registered with OMNeT++
@@ -40,7 +43,11 @@ Define_Module(txc1PaqetsFuente);
 
 void txc1PaqetsFuente::initialize()
 {
-
+    // Initialize variables
+    numSent = 0;
+    numReceived = 0;
+    WATCH(numSent);
+    WATCH(numReceived);
     meanPacketLength = (double) par("meanPacketLength");
        // Get departure times, generate packets and schedule them
        std::vector<double> departures = getDepartures(lambda, samples);
@@ -101,6 +108,13 @@ void txc1PaqetsFuente::handleMessage(cMessage *msg) {
     // Send scheduled packet
     CustomPacket *pkt = check_and_cast<CustomPacket *> (msg);
     send(pkt, "outPort");
+    numSent++;
+}
 
+void txc1PaqetsFuente::refreshDisplay() const
+{
+    char buf[40];
+    sprintf(buf, "rcvd: %ld sent: %ld", numReceived, numSent);
+    getDisplayString().setTagArg("t", 0, buf);
 }
 

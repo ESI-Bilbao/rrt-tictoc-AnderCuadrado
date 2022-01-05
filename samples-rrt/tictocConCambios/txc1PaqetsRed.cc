@@ -26,7 +26,9 @@ class txc1PaqetsRed : public cSimpleModule
            //cChannel *channel[1];//SOLO HAY UNO PORQUE NO HAY MAS ENLACE. EN CASO DE MAS, PONER 2
            cQueue *queue[2];  // one queue for each channel
            double probability;  // from 0 to 1
-
+           long numSent;
+           long numReceived;
+           simsignal_t arrivalSignal;
            /*long numSent;
                long numReceived;
                cLongHistogram hopCountStats;
@@ -37,6 +39,7 @@ class txc1PaqetsRed : public cSimpleModule
            virtual void sendNew(CustomPacket *pkt);
            virtual void sendNext(int gateIndex);
            virtual void sendPacket(CustomPacket *pkt, int gateIndex);
+           virtual void refreshDisplay() const override;
            // The finish() function is called by OMNeT++ at the end of the simulation:
           // virtual void finish() override;
 };
@@ -46,6 +49,12 @@ Define_Module(txc1PaqetsRed);
 
 void txc1PaqetsRed::initialize()
 {
+        // Initialize variables
+            numSent = 0;
+            numReceived = 0;
+            WATCH(numSent);
+            WATCH(numReceived);
+            arrivalSignal = registerSignal("arrival");
         /*
         numSent = 0;
         numReceived = 0;
@@ -76,13 +85,15 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
        cGate *arrivalGate = pkt -> getArrivalGate();
        int arrivalGateIndex = arrivalGate -> getIndex();
        EV << "Packet arrived from gate " + std::to_string(arrivalGateIndex) + "\n";
-
+       numReceived++;
        if (pkt -> getDesdeDest()) {
 
            // Packet from source
            EV << "Forward packet from source\n";
            pkt -> setDesdeDest(false);
+
            sendNew(pkt);
+           numSent++;
            return;
        }
        if (pkt -> getKind() == 1) { // 1: Packet
@@ -91,6 +102,7 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
                CustomPacket *nak = new CustomPacket("NAK");
                nak -> setKind(3);
                send(nak, "outPort", arrivalGateIndex);
+               numSent++;
            }
            else {
 
@@ -108,7 +120,7 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
                ack -> setKind(2);
                send(ack, "outPort", arrivalGateIndex);
                sendNew(pkt);
-               //numSent++;
+               numSent++;//numSent++;
            }
        }
        else if (pkt -> getKind() == 2) { // 2: ACK
@@ -119,11 +131,13 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
                // pop() removes queue's first packet
                queue[arrivalGateIndex] -> pop();
                sendNext(arrivalGateIndex);
+               numSent++;
            }
        }
        else { // 3: NAK
            EV << "NAK from next node\n";
            sendNext(arrivalGateIndex);
+           numSent++;
        }
 }
 
@@ -140,6 +154,7 @@ void txc1PaqetsRed::sendNew(CustomPacket *pkt) {
         // Insert in queue (it may have to be sent again)
         queue[gateIndex] -> insert(pkt);
         sendPacket(pkt, gateIndex);
+
     } else {
         EV << "Queue is not empty, add to back and wait\n";
         queue[gateIndex] -> insert(pkt);
@@ -153,6 +168,7 @@ void txc1PaqetsRed::sendNext(int gateIndex) {
         // front() gets the packet without removing it from queue
         CustomPacket *pkt = check_and_cast<CustomPacket *> (queue[gateIndex] -> front());
         sendPacket(pkt, gateIndex);
+
     }
 }
 
@@ -164,6 +180,13 @@ void txc1PaqetsRed::sendPacket(CustomPacket *pkt, int gateIndex) {
         CustomPacket *newPkt = check_and_cast<CustomPacket *> (pkt -> dup());
         send(newPkt, "outPort", gateIndex);
     }
+}
+
+void txc1PaqetsRed::refreshDisplay() const
+{
+    char buf[40];
+    sprintf(buf, "rcvd: %ld sent: %ld", numReceived, numSent);
+    getDisplayString().setTagArg("t", 0, buf);
 }
 /*
 void txc1PaqetsRed::finish()
