@@ -1,0 +1,23 @@
+file 10076 1641388449                                           
+version 2
+run General-0-20220105-13:14:05-1673
+attr configname General
+attr datetime 20220105-13:14:05
+attr experiment General
+attr inifile tictocFinal.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network tictocFinal
+attr processid 1673
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+
+vector 0 tictocFinal.node5 "" ETV
+vector 1 tictocFinal.node4 "" ETV
+0	428 7428 16 1879 0.514072476361 76.105046799457 306 0 2 180 238
+1	7856 2219 43 1761 0.912439603338 58.943743567575 93 0 2 69 99
+

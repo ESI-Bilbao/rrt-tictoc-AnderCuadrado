@@ -26,10 +26,14 @@ class txc1PaqetsDestino : public cSimpleModule
 private:
     long numSent;
     long numReceived;
+    //simsignal_t arrivalSignal;
+    cLongHistogram hopCountStats;
+    cOutVector hopCountVector;
 protected:
         virtual void handleMessage(cMessage *msg) override;
         virtual void initialize() override;
         virtual void refreshDisplay() const override;
+        virtual void finish() override;
 };
 
 // The module class needs to be registered with OMNeT++
@@ -42,7 +46,7 @@ void txc1PaqetsDestino::initialize()
             numReceived = 0;
             WATCH(numSent);
             WATCH(numReceived);
-
+            //arrivalSignal = registerSignal("arrival");
 }
 
 
@@ -54,6 +58,11 @@ void txc1PaqetsDestino::handleMessage(cMessage *msg)
     int arrivalGateIndex = arrivalGate -> getIndex();
     EV << "Packet arrived from gate " + std::to_string(arrivalGateIndex) + "\n";
     numReceived++;
+    int hopcount=pkt->getHopcount();
+    hopCountStats.collect(hopcount);
+    hopCountVector.record(hopcount);
+    //int hopcount=pkt ->getHopcount();
+    //EV <<"Packet" << pkt->getId() << "arrived after" <<hopcount <<"hops.\n";
     if (pkt -> getKind() == 1) { // 1: Packet
         if (pkt -> hasBitError()) {
             EV << "Packet arrived with error, send NAK\n";
@@ -79,4 +88,18 @@ void txc1PaqetsDestino::refreshDisplay() const
     sprintf(buf, "rcvd: %ld sent: %ld", numReceived, numSent);
     getDisplayString().setTagArg("t", 0, buf);
 }
+void txc1PaqetsDestino::finish()
+{
+    // This function is called by OMNeT++ at the end of the simulation.
+    EV << "Sent:     " << numSent << endl;
+    EV << "Received: " << numReceived << endl;
+    EV << "Hop count, min:    " << hopCountStats.getMin() << endl;
+    EV << "Hop count, max:    " << hopCountStats.getMax() << endl;
+    EV << "Hop count, mean:   " << hopCountStats.getMean() << endl;
+    EV << "Hop count, stddev: " << hopCountStats.getStddev() << endl;
 
+    recordScalar("#sent", numSent);
+    recordScalar("#received", numReceived);
+
+    hopCountStats.recordAs("hop count");
+}

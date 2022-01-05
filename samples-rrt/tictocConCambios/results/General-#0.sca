@@ -1,0 +1,52 @@
+version 2
+run General-0-20220105-13:14:05-1673
+attr configname General
+attr datetime 20220105-13:14:05
+attr experiment General
+attr inifile tictocFinal.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network tictocFinal
+attr processid 1673
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+
+scalar tictocFinal.node4 #sent 93
+scalar tictocFinal.node4 #received 93
+statistic tictocFinal.node4 "hop count"
+field count 93
+field mean 0.74193548387097
+field stddev 0.72085736704185
+field min 0
+field max 2
+field sum 69
+field sqrsum 99
+attr type int
+bin	-inf	0
+bin	-1	0
+bin	0	39
+bin	1	39
+bin	2	15
+bin	3	0
+scalar tictocFinal.node5 #sent 306
+scalar tictocFinal.node5 #received 306
+statistic tictocFinal.node5 "hop count"
+field count 306
+field mean 0.58823529411765
+field stddev 0.65815850166021
+field min 0
+field max 2
+field sum 180
+field sqrsum 238
+attr type int
+bin	-inf	0
+bin	-1	0
+bin	0	155
+bin	1	122
+bin	2	29
+bin	3	0
+

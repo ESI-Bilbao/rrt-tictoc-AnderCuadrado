@@ -40,6 +40,7 @@
  *     int desdeDest = false;
  *     int numSeq;
  *     int origen;
+ *     int hopcount;
  * }
  * </pre>
  */
@@ -49,6 +50,7 @@ class CustomPacket : public ::omnetpp::cPacket
     int desdeDest;
     int numSeq;
     int origen;
+    int hopcount;
 
   private:
     void copy(const CustomPacket& other);
@@ -73,6 +75,8 @@ class CustomPacket : public ::omnetpp::cPacket
     virtual void setNumSeq(int numSeq);
     virtual int getOrigen() const;
     virtual void setOrigen(int origen);
+    virtual int getHopcount() const;
+    virtual void setHopcount(int hopcount);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const CustomPacket& obj) {obj.parsimPack(b);}

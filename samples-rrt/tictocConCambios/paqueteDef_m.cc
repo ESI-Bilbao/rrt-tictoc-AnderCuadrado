@@ -184,6 +184,7 @@ CustomPacket::CustomPacket(const char *name, short kind) : ::omnetpp::cPacket(na
     this->desdeDest = false;
     this->numSeq = 0;
     this->origen = 0;
+    this->hopcount = 0;
 }
 
 CustomPacket::CustomPacket(const CustomPacket& other) : ::omnetpp::cPacket(other)
@@ -208,6 +209,7 @@ void CustomPacket::copy(const CustomPacket& other)
     this->desdeDest = other.desdeDest;
     this->numSeq = other.numSeq;
     this->origen = other.origen;
+    this->hopcount = other.hopcount;
 }
 
 void CustomPacket::parsimPack(omnetpp::cCommBuffer *b) const
@@ -216,6 +218,7 @@ void CustomPacket::parsimPack(omnetpp::cCommBuffer *b) const
     doParsimPacking(b,this->desdeDest);
     doParsimPacking(b,this->numSeq);
     doParsimPacking(b,this->origen);
+    doParsimPacking(b,this->hopcount);
 }
 
 void CustomPacket::parsimUnpack(omnetpp::cCommBuffer *b)
@@ -224,6 +227,7 @@ void CustomPacket::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->desdeDest);
     doParsimUnpacking(b,this->numSeq);
     doParsimUnpacking(b,this->origen);
+    doParsimUnpacking(b,this->hopcount);
 }
 
 int CustomPacket::getDesdeDest() const
@@ -254,6 +258,16 @@ int CustomPacket::getOrigen() const
 void CustomPacket::setOrigen(int origen)
 {
     this->origen = origen;
+}
+
+int CustomPacket::getHopcount() const
+{
+    return this->hopcount;
+}
+
+void CustomPacket::setHopcount(int hopcount)
+{
+    this->hopcount = hopcount;
 }
 
 class CustomPacketDescriptor : public omnetpp::cClassDescriptor
@@ -321,7 +335,7 @@ const char *CustomPacketDescriptor::getProperty(const char *propertyname) const
 int CustomPacketDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 3+basedesc->getFieldCount() : 3;
+    return basedesc ? 4+basedesc->getFieldCount() : 4;
 }
 
 unsigned int CustomPacketDescriptor::getFieldTypeFlags(int field) const
@@ -336,8 +350,9 @@ unsigned int CustomPacketDescriptor::getFieldTypeFlags(int field) const
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<3) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<4) ? fieldTypeFlags[field] : 0;
 }
 
 const char *CustomPacketDescriptor::getFieldName(int field) const
@@ -352,8 +367,9 @@ const char *CustomPacketDescriptor::getFieldName(int field) const
         "desdeDest",
         "numSeq",
         "origen",
+        "hopcount",
     };
-    return (field>=0 && field<3) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<4) ? fieldNames[field] : nullptr;
 }
 
 int CustomPacketDescriptor::findField(const char *fieldName) const
@@ -363,6 +379,7 @@ int CustomPacketDescriptor::findField(const char *fieldName) const
     if (fieldName[0]=='d' && strcmp(fieldName, "desdeDest")==0) return base+0;
     if (fieldName[0]=='n' && strcmp(fieldName, "numSeq")==0) return base+1;
     if (fieldName[0]=='o' && strcmp(fieldName, "origen")==0) return base+2;
+    if (fieldName[0]=='h' && strcmp(fieldName, "hopcount")==0) return base+3;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -378,8 +395,9 @@ const char *CustomPacketDescriptor::getFieldTypeString(int field) const
         "int",
         "int",
         "int",
+        "int",
     };
-    return (field>=0 && field<3) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<4) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **CustomPacketDescriptor::getFieldPropertyNames(int field) const
@@ -449,6 +467,7 @@ std::string CustomPacketDescriptor::getFieldValueAsString(void *object, int fiel
         case 0: return long2string(pp->getDesdeDest());
         case 1: return long2string(pp->getNumSeq());
         case 2: return long2string(pp->getOrigen());
+        case 3: return long2string(pp->getHopcount());
         default: return "";
     }
 }
@@ -466,6 +485,7 @@ bool CustomPacketDescriptor::setFieldValueAsString(void *object, int field, int 
         case 0: pp->setDesdeDest(string2long(value)); return true;
         case 1: pp->setNumSeq(string2long(value)); return true;
         case 2: pp->setOrigen(string2long(value)); return true;
+        case 3: pp->setHopcount(string2long(value)); return true;
         default: return false;
     }
 }

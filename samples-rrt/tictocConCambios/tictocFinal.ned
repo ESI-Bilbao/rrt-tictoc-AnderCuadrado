@@ -2,8 +2,8 @@ simple txc1PaqetsRedFinal
 {
     parameters:
         @display("i=block/departure");
-        @signal[arrival](type="long");
-        @statistic[hopCount](title="hop count"; source="arrival"; record=vector,stats; interpolationmode=none);
+        //@signal[arrival](type="long");
+        //@statistic[hopCount](title="hop count"; source="arrival"; record=vector,stats; interpolationmode=none);
         double probability;
     gates:
         input inPort[];

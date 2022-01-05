@@ -28,7 +28,8 @@ class txc1PaqetsRed : public cSimpleModule
            double probability;  // from 0 to 1
            long numSent;
            long numReceived;
-           simsignal_t arrivalSignal;
+
+           //simsignal_t arrivalSignal;
            /*long numSent;
                long numReceived;
                cLongHistogram hopCountStats;
@@ -54,7 +55,7 @@ void txc1PaqetsRed::initialize()
             numReceived = 0;
             WATCH(numSent);
             WATCH(numReceived);
-            arrivalSignal = registerSignal("arrival");
+           // arrivalSignal = registerSignal("arrival");
         /*
         numSent = 0;
         numReceived = 0;
@@ -87,7 +88,8 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
        EV << "Packet arrived from gate " + std::to_string(arrivalGateIndex) + "\n";
        numReceived++;
        if (pkt -> getDesdeDest()) {
-
+           //int hopcount=pkt ->getHopcount();
+           //EV <<"Packet" << pkt->getId() << "arrived after" <<hopcount <<"hops.\n";
            // Packet from source
            EV << "Forward packet from source\n";
            pkt -> setDesdeDest(false);
@@ -106,14 +108,9 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
            }
            else {
 
-              /*
-               // Message arrived
-               int hopcount = pkt->getHopCount();
-               // update statistics.
-                numReceived++;
-                hopCountVector.record(hopcount);
-                hopCountStats.collect(hopcount);
-                */
+
+               // Increment hop count.
+               pkt->setHopcount(pkt->getHopcount()+1);
 
                EV << "Packet arrived without error, send ACK\n";
                CustomPacket *ack = new CustomPacket("ACK");
