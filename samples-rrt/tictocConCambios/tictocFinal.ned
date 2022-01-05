@@ -37,23 +37,23 @@ network tictocFinal
     types:
         channel Channel extends ned.DatarateChannel
         {
-            datarate = 1000bps;
-            delay = 100us;
+            datarate = 3000bps;
+            delay = 5ms;
             per = 0.25;
         }
     submodules:
 
         source1: txc1PaqetsFuente {
             @display("p=48,139");
-            meanPacketLength = 1000/3;
+            meanPacketLength = 9600/3;
         }
         source2: txc1PaqetsFuente {
             @display("p=54,237");
-            meanPacketLength = 1000/3;
+            meanPacketLength = 9600/3;
         }
         source3: txc1PaqetsFuente {
             @display("p=54,33");
-            meanPacketLength = 1000/3;
+            meanPacketLength = 9600/3;
         }
         node1: txc1PaqetsRed {
             @display("p=141.36,139.5");

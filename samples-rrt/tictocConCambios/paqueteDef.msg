@@ -16,5 +16,5 @@ packet CustomPacket {
  	int desdeDest=false;
  	int numSeq;
  	int origen;
- 	int hopcount;
+ 	int hopcount=0;
 }

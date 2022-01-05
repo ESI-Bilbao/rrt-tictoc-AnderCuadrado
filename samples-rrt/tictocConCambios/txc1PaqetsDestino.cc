@@ -29,6 +29,11 @@ private:
     //simsignal_t arrivalSignal;
     cLongHistogram hopCountStats;
     cOutVector hopCountVector;
+
+    cHistogram e2eHistogram;
+    cOutVector e2Delay;
+
+
 protected:
         virtual void handleMessage(cMessage *msg) override;
         virtual void initialize() override;
@@ -47,6 +52,10 @@ void txc1PaqetsDestino::initialize()
             WATCH(numSent);
             WATCH(numReceived);
             //arrivalSignal = registerSignal("arrival");
+            e2Delay.setName("e2Delay");
+            e2eHistogram.setName("e2eHistogram");
+
+
 }
 
 
@@ -58,9 +67,7 @@ void txc1PaqetsDestino::handleMessage(cMessage *msg)
     int arrivalGateIndex = arrivalGate -> getIndex();
     EV << "Packet arrived from gate " + std::to_string(arrivalGateIndex) + "\n";
     numReceived++;
-    int hopcount=pkt->getHopcount();
-    hopCountStats.collect(hopcount);
-    hopCountVector.record(hopcount);
+
     //int hopcount=pkt ->getHopcount();
     //EV <<"Packet" << pkt->getId() << "arrived after" <<hopcount <<"hops.\n";
     if (pkt -> getKind() == 1) { // 1: Packet
@@ -72,6 +79,12 @@ void txc1PaqetsDestino::handleMessage(cMessage *msg)
             numSent++;
         }
         else {
+            int hopcount=pkt->getHopcount();
+            hopCountStats.collect(hopcount);
+            hopCountVector.record(hopcount);
+            double delay = (simTime() - pkt -> getCreationTime()).dbl();
+            e2Delay.record(delay);
+            e2eHistogram.collect(delay);
             EV << "Packet arrived without error, send ACK\n";
             CustomPacket *ack = new CustomPacket("ACK");
             ack -> setKind(2);
@@ -102,4 +115,5 @@ void txc1PaqetsDestino::finish()
     recordScalar("#received", numReceived);
 
     hopCountStats.recordAs("hop count");
+    e2eHistogram.recordAs("end to end Delay");
 }

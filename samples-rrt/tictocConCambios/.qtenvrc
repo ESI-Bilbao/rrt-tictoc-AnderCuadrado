@@ -2,6 +2,70 @@
 last-configname=TicToc18
 last-runnumber=1
 
+[Inspector-0]
+classname=omnetpp::cOutVector
+fullscreen=false
+geom=@Rect(67 501 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node5.e2Delay
+type=2
+
+[Inspector-1]
+classname=omnetpp::cHistogram
+fullscreen=false
+geom=@Rect(467 501 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node5.e2eHistogram
+type=2
+
+[Inspector-2]
+classname=omnetpp::cOutVector
+fullscreen=false
+geom=@Rect(474 165 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node5.
+type=2
+
+[Inspector-3]
+classname=omnetpp::cLongHistogram
+fullscreen=false
+geom=@Rect(871 507 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node5.
+type=2
+
+[Inspector-4]
+classname=omnetpp::cOutVector
+fullscreen=false
+geom=@Rect(1503 81 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node4.e2Delay
+type=2
+
+[Inspector-5]
+classname=omnetpp::cHistogram
+fullscreen=false
+geom=@Rect(1103 84 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node4.e2eHistogram
+type=2
+
+[Inspector-6]
+classname=omnetpp::cOutVector
+fullscreen=false
+geom=@Rect(1516 409 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node4.
+type=2
+
+[Inspector-7]
+classname=omnetpp::cLongHistogram
+fullscreen=false
+geom=@Rect(1479 710 400 300)
+id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
+object=tictocFinal.node4.
+type=2
+
 [RunModeProfiles]
 fast-max-animation-speed=nan
 fast-max-playback-speed=1e+6
