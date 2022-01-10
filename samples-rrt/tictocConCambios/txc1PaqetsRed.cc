@@ -110,7 +110,7 @@ void txc1PaqetsRed::handleMessage(cMessage *msg) {
 
 
                // Increment hop count.
-               pkt->setHopcount(pkt->getHopcount()+1);
+               //pkt->setHopcount(pkt->getHopcount()+1);
 
                EV << "Packet arrived without error, send ACK\n";
                CustomPacket *ack = new CustomPacket("ACK");
@@ -175,6 +175,8 @@ void txc1PaqetsRed::sendPacket(CustomPacket *pkt, int gateIndex) {
     } else {
         // OMNeT++ can't send a packet while it is queued, must send a copy
         CustomPacket *newPkt = check_and_cast<CustomPacket *> (pkt -> dup());
+        // Increment hop count.
+           pkt->setHopcount(pkt->getHopcount()+1);
         send(newPkt, "outPort", gateIndex);
     }
 }

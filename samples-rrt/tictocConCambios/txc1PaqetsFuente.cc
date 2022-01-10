@@ -24,7 +24,7 @@ class txc1PaqetsFuente : public cSimpleModule
   private:
             double lambda = 2;
             double meanPacketLength;
-            int samples = 100;
+            int samples = 10000;
             int sequenceNumber = 0;
             long numSent;
             long numReceived;
